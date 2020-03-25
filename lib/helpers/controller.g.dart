@@ -12,14 +12,14 @@ mixin _$Controller on ControllerBase, Store {
   final _$toDoListAtom = Atom(name: 'ControllerBase.toDoList');
 
   @override
-  List<dynamic> get toDoList {
+  ObservableList<dynamic> get toDoList {
     _$toDoListAtom.context.enforceReadPolicy(_$toDoListAtom);
     _$toDoListAtom.reportObserved();
     return super.toDoList;
   }
 
   @override
-  set toDoList(List<dynamic> value) {
+  set toDoList(ObservableList<dynamic> value) {
     _$toDoListAtom.context.conditionallyRunInAction(() {
       super.toDoList = value;
       _$toDoListAtom.reportChanged();
@@ -30,7 +30,17 @@ mixin _$Controller on ControllerBase, Store {
       ActionController(name: 'ControllerBase');
 
   @override
-  void addTarefas(TarefasAcademicas addTarefa) {
+  dynamic init() {
+    final _$actionInfo = _$ControllerBaseActionController.startAction();
+    try {
+      return super.init();
+    } finally {
+      _$ControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addTarefas(Tarefa addTarefa) {
     final _$actionInfo = _$ControllerBaseActionController.startAction();
     try {
       return super.addTarefas(addTarefa);
@@ -40,10 +50,10 @@ mixin _$Controller on ControllerBase, Store {
   }
 
   @override
-  void initList() {
+  void deliteTarefa(dynamic context, int index) {
     final _$actionInfo = _$ControllerBaseActionController.startAction();
     try {
-      return super.initList();
+      return super.deliteTarefa(context, index);
     } finally {
       _$ControllerBaseActionController.endAction(_$actionInfo);
     }
