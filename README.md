@@ -1,7 +1,7 @@
 
 <h1 align="center">
 <img alt="" title="" src="https://cdn.icon-icons.com/icons2/572/PNG/512/1457055658_App_Development_icon-icons.com_54712.png" width="80" />
-Lista de tarefas
+Garenciados de Tarefas
   
 </h1>
 
@@ -48,7 +48,7 @@ Tecnologias ultilizadas no projeto:
 ## 💻 Projeto
 
 Projeto para treinamento da linguagem de programação e desenvolvimento mobile. 
-Aplicativo cria uma lista de atividades, mostrando quais estão concluídas e mostra inicialmenta as que serão realizadas.
+Aplicativo cria uma lista de atividades, mostrando quais estão concluídas e, ordena, as que estão pendentes realizadas. 
 
 ## 🤔 Como contribuir
 

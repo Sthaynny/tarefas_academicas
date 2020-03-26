@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,7 +20,7 @@ abstract class ControllerBase with Store {
 
   Future<File> _getFile() async {
     final directory = await getApplicationDocumentsDirectory();
-    return File("${directory.path}/tarefasAcademicas.json");
+    return File("${directory.path}/geranciador_tarefa.json");
   }
 
   Future<File> _saveData() async {
@@ -33,8 +32,14 @@ abstract class ControllerBase with Store {
   Future<String> _readData() async {
     try {
       var file = await _getFile();
-      return file.readAsString();
+      bool exist = await file.exists();
+      if(exist){
+        return file.readAsString();
+      }else{
+        return null;
+      }      
     } catch (e) {
+      print("Erro ao carregar a Lista");
       return null;
     }
   }
@@ -52,7 +57,7 @@ abstract class ControllerBase with Store {
   }
 
   @action
-  void deliteTarefa(context,int index) {
+  void deliteTarefa(context, int index) {
     var _removed = toDoList[index];
     int _posicao = index;
     toDoList.removeAt(index);
@@ -74,9 +79,24 @@ abstract class ControllerBase with Store {
   @action
   void carregarList() {
     _readData().then((data) {
-      if (data != null) {
-        toDoList.addAll(json.decode(data));
-      }
+      if (data != null) toDoList.addAll(json.decode(data));
     });
+  }
+
+  @action
+  void updateList(int index, Tarefa addTarefa) {
+    Map<String, dynamic> newTarefa = Map();
+    newTarefa["titulo"] = addTarefa.titulo;
+    newTarefa["descricao"] = addTarefa.descricao;
+    newTarefa["dataEntrega"] = addTarefa.dataEntrega;
+    newTarefa["path"] = addTarefa.arquivoPath;
+    newTarefa["ok"] = addTarefa.status;
+    toDoList.insert(index, newTarefa);
+    _saveData();
+  }
+
+  @action
+  saveRefresh() {
+    _saveData();
   }
 }

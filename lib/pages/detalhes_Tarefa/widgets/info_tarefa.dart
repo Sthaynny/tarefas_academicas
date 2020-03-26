@@ -19,7 +19,7 @@ Widget textInfo(String title, String info) {
   );
 }
 
-Widget textInfoStatus(String title, String info, color) {
+Widget textInfoStatus(String title, String status, color, onPressed) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -29,10 +29,18 @@ Widget textInfoStatus(String title, String info, color) {
       ),
       Padding(
         padding: EdgeInsets.only(left: 25, top: 5, bottom: 20),
-        child: Text(
-          info,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300, color: color),
-        ),
+        child: RaisedButton(
+            color: color,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(05)),
+            child: Text(
+              status,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white),
+            ),
+            onPressed: onPressed),
       )
     ],
   );

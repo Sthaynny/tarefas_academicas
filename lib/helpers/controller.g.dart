@@ -70,6 +70,26 @@ mixin _$Controller on ControllerBase, Store {
   }
 
   @override
+  void updateList(int index, Tarefa addTarefa) {
+    final _$actionInfo = _$ControllerBaseActionController.startAction();
+    try {
+      return super.updateList(index, addTarefa);
+    } finally {
+      _$ControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic saveRefresh() {
+    final _$actionInfo = _$ControllerBaseActionController.startAction();
+    try {
+      return super.saveRefresh();
+    } finally {
+      _$ControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string = 'toDoList: ${toDoList.toString()}';
     return '{$string}';

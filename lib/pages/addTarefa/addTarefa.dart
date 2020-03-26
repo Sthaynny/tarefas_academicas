@@ -1,34 +1,27 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:tarefas_academicas/globalWidgets/input.dart';
+import 'package:tarefas_academicas/globalWidgets/will_pop.dart';
 import 'package:tarefas_academicas/helpers/validacao.dart';
 import 'package:tarefas_academicas/models/tarefas.dart';
-import 'package:tarefas_academicas/pages/addTarefa/widgets/titulo.dart';
-import 'package:tarefas_academicas/pages/addTarefa/widgets/descricao.dart';
-import 'package:tarefas_academicas/pages/addTarefa/widgets/dataTarefa.dart';
-import 'package:tarefas_academicas/pages/addTarefa/widgets/arquivoPDF.dart';
-import 'package:tarefas_academicas/pages/addTarefa/widgets/will_pop.dart';
+import 'package:tarefas_academicas/pages/addTarefa/widget/barTop.dart';
 
 class AddTarefa extends StatelessWidget {
   Validacao _validar = Validacao();
   Tarefa _tarefa = Tarefa();
   final _tituloController = TextEditingController();
   final _descricaoController = TextEditingController();
-  bool _userEdited = false;
-
   @override
   Widget build(BuildContext context) {
+    initTarefa();
+    _validar.titulo = true;
     _tarefa.userEdited = false;
     return WillPopScope(
       onWillPop: () {
         return requestPop(context, _tarefa.userEdited);
       },
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Adicionar  Atividade"),
-          backgroundColor: Colors.deepOrangeAccent,
-        ),
+        appBar: barTopAddTarefa(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
           backgroundColor: Colors.deepOrange,
@@ -36,10 +29,10 @@ class AddTarefa extends StatelessWidget {
             _tarefa.setTitulo(_tituloController.text);
             _tarefa.setDescricao(_descricaoController.text);
             _tarefa.setStatus(false);
-            
-                                       print("path salvo:"+_tarefa.arquivoPath.toString());
-            if (_validar.validarCampo(_tarefa)) {
+            if (_tarefa.titulo.isNotEmpty) {
               Navigator.pop(context, _tarefa);
+            } else {
+              _validar.titulo = false;
             }
           },
         ),
@@ -57,17 +50,33 @@ class AddTarefa extends StatelessWidget {
                         //fit: BoxFit.cover,
                         image: AssetImage("images/addTarefa.png"))),
               ),
-              tituloTarefa(_tituloController, _tarefa, _validar),
-              descricaoTarefa(_descricaoController, _tarefa, _validar),
-              dataTarefa(
-                context,
-                _tarefa,
+              Observer(
+                builder: (_) => textInput("Titulo", _tituloController, (value) {
+                  _validar.titulo = true;
+                  _tarefa.titulo = value;
+                  _tarefa.userEdited = true;
+                }, _validar.titulo),
               ),
-              arquivoTarefa(context, _tarefa),
+              textInputDecription("Descrição", _descricaoController, (value) {
+                _tarefa.descricao = value;
+                _tarefa.userEdited = true;
+              }),
+              dataInput(context, _tarefa),
+              pathInput(context, _tarefa),
             ],
           ),
         ),
       ),
     );
+  }
+  
+  initTarefa(){
+    _tarefa.titulo='';
+    _tarefa.file='';
+    _tarefa.descricao='';
+    _tarefa.arquivoPath='';
+    _tarefa.dataEntrega='';
+    _tarefa.status=false;
+    _tarefa.userEdited=false;
   }
 }
