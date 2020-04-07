@@ -1,6 +1,6 @@
 
 <h1 align="center">
-<img alt="" title="" src="https://cdn.icon-icons.com/icons2/572/PNG/512/1457055658_App_Development_icon-icons.com_54712.png" width="80" />
+<img alt="" title="" src="https://cdn.icon-icons.com/icons2/572/PNG/512/1457055658_App_Development_icon-icons.com_54712.png" width="80" /><br>
 Garenciados de Tarefas
   
 </h1>
